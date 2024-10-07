@@ -3,6 +3,7 @@ using Bogus;
 using Microsoft.Azure.Cosmos;
 using Spectre.Console;
 using Spectre.Console.Json;
+using System;
 using System.Text.Json;
 using Console = Spectre.Console.AnsiConsole;
 using Container = Microsoft.Azure.Cosmos.Container;
@@ -27,23 +28,28 @@ internal sealed class ProductService
 
         await InsertAttributeArrayItemsAsync(attributeArrayProducts);
 
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         await ExecuteAttributePropertyQueryAsync();
+        watch.Stop();
+        var elapsedMs = watch.ElapsedMilliseconds;
+        Console.WriteLine($"AttributePropertyQuery: {elapsedMs} ms.");
 
+        watch = System.Diagnostics.Stopwatch.StartNew();
         await ExecuteAttributeArrayQueryAsync();
-        
-
+        watch.Stop();
+        elapsedMs = watch.ElapsedMilliseconds;
+        Console.WriteLine($"AttributeArrayQuery: {elapsedMs} ms.");
     }
 
     private async Task<(IList<AttributePropertyProduct> attributePropertyProducts, IList<AttributeArrayProduct> attributeArrayProducts)> GenerateDataAsync()
     {
         int count = 3;
 
-        Console.MarkupLine($"[teal bold]Press any key to generate [underline]{count}[/] products with attributes as properties and attribute array pattern.[/]");
-        System.Console.ReadKey();
+        //Console.MarkupLine($"[teal bold]Press any key to generate [underline]{count}[/] products with attributes as properties and attribute array pattern.[/]");
+        //System.Console.ReadKey();
 
-
-        Console.MarkupLine($"[red italic]Creating [underline]{count}[/] product items with [bold]property-based attributes[/]...[/]");
-        await Task.Delay(1500);
+        //Console.MarkupLine($"[red italic]Creating [underline]{count}[/] product items with [bold]property-based attributes[/]...[/]");
+        //await Task.Delay(1500);
 
         IList<AttributePropertyProduct> attributePropertyProducts = new Faker<AttributePropertyProduct>()
             .CustomInstantiator(f =>
@@ -67,8 +73,8 @@ internal sealed class ProductService
         //Make equivalent attribute array-based products
         List<AttributeArrayProduct> attributeArrayProducts = new List<AttributeArrayProduct>();
 
-        Console.MarkupLine($"[red italic]Duplicating the [underline]{count}[/] products with [bold]array-based attributes[/]...[/]");
-        await Task.Delay(1500);
+        //Console.MarkupLine($"[red italic]Duplicating the [underline]{count}[/] products with [bold]array-based attributes[/]...[/]");
+        //await Task.Delay(1500);
 
         foreach (var attributePropertyProduct in attributePropertyProducts)
         {
@@ -143,12 +149,11 @@ internal sealed class ProductService
 
     private async Task ExecuteAttributePropertyQueryAsync()
     {
-        Console.MarkupLine($"[teal bold]Press any key to execute a query with attributes as properties[/]");
-        System.Console.ReadKey();
+        //Console.MarkupLine($"[teal bold]Press any key to execute a query with attributes as properties[/]");
+        //System.Console.ReadKey();
 
-
-        Console.MarkupLine("[red italic]Performing a query on size attributes using multiple [underline]OR[/] statements...[/]");
-        await Task.Delay(1500);
+        //Console.MarkupLine("[red italic]Performing a query on size attributes using multiple [underline]OR[/] statements...[/]");
+        //await Task.Delay(1500);
 
         string queryString = "SELECT p.name, p.sizeSmall, p.sizeMedium, p.sizeLarge FROM products p WHERE p.sizeSmall >= @quantity OR p.sizeMedium >= @quantity OR p.sizeLarge >= @quantity";
 
@@ -186,11 +191,11 @@ internal sealed class ProductService
 
     private async Task ExecuteAttributeArrayQueryAsync()
     {
-        Console.MarkupLine($"[teal bold]Press any key to execute a query using attribute array pattern[/]");
-        System.Console.ReadKey();
+        //Console.MarkupLine($"[teal bold]Press any key to execute a query using attribute array pattern[/]");
+        //System.Console.ReadKey();
 
-        Console.MarkupLine("[red italic]Performing a query on size attributes using simple [underline]JOIN[/] statements and comparison operators...[/]");
-        await Task.Delay(1500);
+        //Console.MarkupLine("[red italic]Performing a query on size attributes using simple [underline]JOIN[/] statements and comparison operators...[/]");
+        //await Task.Delay(1500);
 
         string queryString = $"SELECT p.name, s.size, s.count FROM products p JOIN s IN p.sizes WHERE s.count >= @quantity";
 

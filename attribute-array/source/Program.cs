@@ -63,7 +63,7 @@ await new ProductService(productsContainer)
     .GenerateProductsAsync();
 
 Console.Write(
-    new Panel("[green]The attribute upload utlity has finished. Use the Data Explorer in Azure Cosmos DB to run additional queries.[/]")
+    new Panel("[green]The attribute upload utility has finished. Use the Data Explorer in Azure Cosmos DB to run additional queries.[/]")
         .BorderColor(Color.White)
         .RoundedBorder()
         .Expand()

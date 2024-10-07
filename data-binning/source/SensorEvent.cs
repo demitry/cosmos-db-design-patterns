@@ -13,7 +13,6 @@ namespace DataBinning
     
         public static SensorEvent GenerateSensorEvent(string deviceId)
         {
-           
             Random rng = new Random();
             
             var sessionId = Guid.NewGuid().ToString();
@@ -33,8 +32,8 @@ namespace DataBinning
     {
         public string? eventTimestamp { get; set; }
         public double temperature { get; set; }
-
     }
+
     public class SummarySensorEvent
     {
         public string id { get; set; } = Guid.NewGuid().ToString();

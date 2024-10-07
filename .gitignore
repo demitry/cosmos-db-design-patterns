@@ -360,3 +360,4 @@ MigrationBackup/
 
 /document-versioning/source/website/appsettings.Development.json
 /schema-versioning/source/website/appsettings.Development.json
+distributed-counter/source/.idea/

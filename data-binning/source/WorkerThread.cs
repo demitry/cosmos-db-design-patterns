@@ -19,7 +19,6 @@ namespace DataBinning
             this.deviceId = deviceId;
             this.postMessage = postMessage;
         }
-                
 
         public async void SimulateEvents()
         {
@@ -40,7 +39,6 @@ namespace DataBinning
                 //Only generate events when seconds is a multiple of 5
                 if (time.Second % 5 == 0)
                 {
-
                     var sensorEvent = SensorEvent.GenerateSensorEvent(deviceId);
                     sensorEvents.Add(sensorEvent);
 
@@ -67,7 +65,6 @@ namespace DataBinning
 
                         nextPublishTime = Utility.GetNextPublishTime(time);
                         postMessage($"Device#{deviceId}: Current Time is {time}, next batch publishing at {nextPublishTime.ToString()}");
-
 
                         sensorEvents = new List<SensorEvent>();
 
